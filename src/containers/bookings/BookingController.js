@@ -10,6 +10,17 @@ class BookingController extends React.Component {
       bookings: []
     }
 
+    this.handleDelete = this.handleDelete.bind(this);
+
+  }
+
+  handleDelete(id){
+    const request = new Request();
+    const url = "/api/bookings/" + id;
+    request.delete(url)
+    .then(() => {
+      window.location = "/bookings";
+    })
   }
 
   componentDidMount(){
@@ -23,7 +34,7 @@ class BookingController extends React.Component {
 
   render(){
     return (
-      <BookingList bookings={this.state.bookings}/>
+      <BookingList bookings={this.state.bookings} onDelete={this.handleDelete}/>
     )
   }
 

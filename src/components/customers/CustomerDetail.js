@@ -10,6 +10,8 @@ class CustomerDetail extends React.Component{
       bookings: []
     }
 
+    this.handleDelete = this.handleDelete.bind(this);
+
   }
 
   componentWillMount(){
@@ -20,14 +22,18 @@ class CustomerDetail extends React.Component{
     request.get(url)
     .then((data) => {
       this.setState({bookings: data._embedded.bookings})
-    })
+      })
+    }
+    console.log(this.state.bookings);
   }
-  console.log(this.state.bookings);
-}
+
+  handleDelete(){
+    this.props.onDelete(this.props.customer.id)
+  }
+
+
 
   render(){
-
-
 
     if(!this.props.customer){
     return <p>Loading</p>}
@@ -37,6 +43,7 @@ class CustomerDetail extends React.Component{
 
       <div>
         <Customer customer={this.props.customer} />
+        <button onClick={this.handleDelete}>Delete Customer</button>
         <p>{this.state.bookings.date}</p>
         <p>{this.props.customer.id}</p>
 

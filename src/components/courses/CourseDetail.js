@@ -6,10 +6,16 @@ const CourseDetail = (props) => {
     return <p>Loading</p>
   }
 
-  return(
-    <Course course={props.course} />
-  )
+  const handleDelete = () => {
+    props.onDelete(props.course.id);
+  }
 
+  return(
+    <div>
+      <Course course={props.course} />
+      <button onClick={handleDelete}>Delete Course</button>
+    </div>
+  )
 
 }
 

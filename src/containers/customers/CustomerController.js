@@ -12,6 +12,7 @@ class CustomerController extends React.Component {
     }
 
     this.findCustomerbyId = this.findCustomerbyId.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
 
   }
 
@@ -30,6 +31,15 @@ class CustomerController extends React.Component {
     })
   }
 
+  handleDelete(id){
+    const request = new Request();
+    const url = "/api/customers/" + id;
+
+    request.delete(url)
+    .then(() => {
+      window.location = "/customers";
+    })
+  }
 
   render(){
     return (
@@ -40,7 +50,7 @@ class CustomerController extends React.Component {
             <Route exact path="/customers/:id" render={(props) => {
               const id = props.match.params.id;
               const customer = this.findCustomerbyId(id);
-              return <CustomerDetail customer={customer} /> }} />
+              return <CustomerDetail customer={customer} onDelete={this.handleDelete}/> }} />
           </Switch>
         </React.Fragment>
       </Router>

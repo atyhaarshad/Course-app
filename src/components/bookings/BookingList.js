@@ -9,7 +9,7 @@ const BookingList = (props) => {
   const allBookings = props.bookings.map((booking) => {
     return (
       <li key={booking.id}>
-      <Booking booking={booking} />
+      <Booking booking={booking} onDelete={props.onDelete}/>
       </li>
     )
   })

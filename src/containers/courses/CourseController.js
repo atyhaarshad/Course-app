@@ -12,6 +12,7 @@ class CourseController extends React.Component {
     }
 
     this.findCourseById = this.findCourseById.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
 
   }
 
@@ -30,6 +31,15 @@ class CourseController extends React.Component {
     })
   }
 
+  handleDelete(id){
+    const request = new Request();
+    const url = "/api/courses/" + id;
+    request.delete(url)
+    .then(() => {
+      window.location = "/courses";
+    })
+  }
+
   render(){
     return (
       <Router>
@@ -39,7 +49,7 @@ class CourseController extends React.Component {
             <Route exact path="/courses/:id" render={(props) => {
               const id = props.match.params.id;
               const course = this.findCourseById(id);
-              return <CourseDetail course={course} />
+              return <CourseDetail course={course} onDelete={this.handleDelete}/>
             }} />
           </Switch>
         </React.Fragment>
