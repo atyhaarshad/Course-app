@@ -14,6 +14,8 @@ const CourseList = (props) => {
     )
   })
 
+
+
   return (
     <ul> {allCourses}
     </ul>

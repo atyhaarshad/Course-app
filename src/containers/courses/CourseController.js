@@ -13,6 +13,7 @@ class CourseController extends React.Component {
 
     this.findCourseById = this.findCourseById.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.findCourseByTown = this.findCourseByTown.bind(this);
 
   }
 
@@ -31,6 +32,16 @@ class CourseController extends React.Component {
     })
   }
 
+  findCourseByTown(town){
+    const filteredCourses = [];
+    this.state.courses.forEach((course) => {
+      if (course.town === town){
+        filteredCourses.push(course)
+      }
+    });
+    return filteredCourses;
+  }
+
   handleDelete(id){
     const request = new Request();
     const url = "/api/courses/" + id;
@@ -46,11 +57,18 @@ class CourseController extends React.Component {
         <React.Fragment>
           <Switch>
             <Route exact path="/courses" render={() => <CourseList courses={this.state.courses}/> }/>
+            <Route exact path="/courses/town/:town" render={(props) => {
+              const town = props.match.params.town;
+              const course = this.findCourseByTown(town);
+              return <CourseList courses={this.findCourseByTown} />
+            }} />
+
             <Route exact path="/courses/:id" render={(props) => {
               const id = props.match.params.id;
               const course = this.findCourseById(id);
               return <CourseDetail course={course} onDelete={this.handleDelete}/>
             }} />
+
           </Switch>
         </React.Fragment>
       </Router>

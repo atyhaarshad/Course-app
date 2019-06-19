@@ -31,8 +31,6 @@ class CustomerDetail extends React.Component{
     this.props.onDelete(this.props.customer.id)
   }
 
-
-
   render(){
 
     if(!this.props.customer){
