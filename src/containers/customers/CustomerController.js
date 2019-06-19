@@ -1,6 +1,7 @@
 import React from 'react';
 // import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Request from '../../helpers/Request';
+import CustomerList from '../../components/customers/CustomerList';
 
 class CustomerController extends React.Component {
   constructor(props){
@@ -20,11 +21,9 @@ class CustomerController extends React.Component {
     })
   }
 
-
-
   render(){
     return (
-      <h1> This is the customer controller!!!! </h1>
+      <CustomerList customers={this.state.customers}/>
     )
   }
 
