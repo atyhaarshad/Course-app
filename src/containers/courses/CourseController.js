@@ -1,7 +1,8 @@
 import React from 'react';
-// import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Request from '../../helpers/Request';
 import CourseList from '../../components/courses/CourseList';
+import CourseDetail from '../../components/courses/CourseDetail';
 
 class CourseController extends React.Component {
   constructor(props){
@@ -9,6 +10,8 @@ class CourseController extends React.Component {
     this.state = {
       courses: []
     }
+
+    this.findCourseById = this.findCourseById.bind(this);
 
   }
 
@@ -21,9 +24,26 @@ class CourseController extends React.Component {
     })
   }
 
+  findCourseById(id){
+    return this.state.courses.find((course) => {
+      return course.id === parseInt(id);
+    })
+  }
+
   render(){
     return (
-      <CourseList courses={this.state.courses}/>
+      <Router>
+        <React.Fragment>
+          <Switch>
+            <Route exact path="/courses" render={() => <CourseList courses={this.state.courses}/> }/>
+            <Route exact path="/courses/:id" render={(props) => {
+              const id = props.match.params.id;
+              const course = this.findCourseById(id);
+              return <CourseDetail course={course} />
+            }} />
+          </Switch>
+        </React.Fragment>
+      </Router>
     )
   }
 

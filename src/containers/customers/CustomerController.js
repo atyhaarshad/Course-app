@@ -1,7 +1,8 @@
 import React from 'react';
-// import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Request from '../../helpers/Request';
 import CustomerList from '../../components/customers/CustomerList';
+import CustomerDetail from '../../components/customers/CustomerDetail';
 
 class CustomerController extends React.Component {
   constructor(props){
@@ -9,6 +10,8 @@ class CustomerController extends React.Component {
     this.state = {
       customers: []
     }
+
+    this.findCustomerbyId = this.findCustomerbyId.bind(this);
 
   }
 
@@ -21,12 +24,28 @@ class CustomerController extends React.Component {
     })
   }
 
-  render(){
-    return (
-      <CustomerList customers={this.state.customers}/>
-    )
+  findCustomerbyId(id){
+    return this.state.customers.find((customer) => {
+      return customer.id === parseInt(id);
+    })
   }
 
+
+  render(){
+    return (
+      <Router>
+        <React.Fragment>
+          <Switch>
+            <Route exact path="/customers" render={() => <CustomerList customers={this.state.customers}/> } />
+            <Route exact path="/customers/:id" render={(props) => {
+              const id = props.match.params.id;
+              const customer = this.findCustomerbyId(id);
+              return <CustomerDetail customer={customer} /> }} />
+          </Switch>
+        </React.Fragment>
+      </Router>
+    )
+  }
 }
 
 export default CustomerController;
